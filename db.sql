@@ -146,14 +146,14 @@ create table `followUser` (
 --
 
 insert into circus (name) 
-values ('L\'Odyssée du Cirque'), ('Cirque Pinder'), ('Cirque du Soleil');
+values ("L'Odyssée du Cirque"), ("Cirque Pinder"), ("Cirque du Soleil");
 
 insert into city (name, country, latitude, longitude)
-values ('Belfort', 1, 47.37590000, 6.52000000);
+values ("Belfort", 1, 47.37590000, 6.52000000);
 
 insert into country (id, name, latitude, longitude)
-values (1, 'France', 46.00000000, 2.00000000);
+values (1, "France", 46.00000000, 2.00000000);
 
 insert into user (username, password, firstName, lastName, email, picture)
-values ('stowka', sha1('893QQY'), 'Antoine', 'De Gieter',
-'antoine@netproduction.fr', 0);
+values ("stowka", sha1("893QQY"), "Antoine", "De Gieter",
+"antoine@netproduction.fr", 0);
