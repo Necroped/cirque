@@ -11,7 +11,7 @@
 -- =========
 -- STRUCTURE
 -- =========
--- 		circus
+--		circus
 --			describes registered circus entities;
 --			circuses can create events and post photographs
 --		city
@@ -21,7 +21,7 @@
 --		event
 --			describes event entities;
 --			events contain a photo album and happen in a city
--- 		message
+--		message
 --			describes message entities;
 --			messages are sent from a user to another user
 --		picture
@@ -29,7 +29,7 @@
 --			pictures are have been taken on a date, belong to an event
 --			and may have a description
 --		user
--- 			describes a registered user entity
+--			describes a registered user entity
 --			regular users can follow and message circuses and users
 --
 --		followCircus
@@ -154,6 +154,6 @@ values ("Belfort", 1, 47.37590000, 6.52000000);
 insert into country (id, name, latitude, longitude)
 values (1, "France", 46.00000000, 2.00000000);
 
-insert into user (username, password, firstName, lastName, email, picture)
+insert into user (username, password, firstName, lastName, email)
 values ("stowka", sha1("893QQY"), "Antoine", "De Gieter",
-"antoine@netproduction.fr", 0);
+"antoine@netproduction.fr");
