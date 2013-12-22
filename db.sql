@@ -10,6 +10,7 @@ use cirque;
 create table `user` (
 	`id` bigint(20) not null auto_increment,
 	`username` varchar(64) not null,
+	`password` varchar(40) not null,
 	`email` varchar(64) not null,
 	`picture` tinyint(1) not null,
 	primary key(`id`),
