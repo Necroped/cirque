@@ -18,7 +18,7 @@ create table `user` (
 ) engine=InnoDB auto_increment=500 default charset=`utf-8`;
 
 create table `message` (
-	`ìd` bigint(10) not null auto_increment,
+	`id` bigint(10) not null auto_increment,
 	`from` bigint(10) not null,
 	`to` bigint(10) not null,
 	`text` varchar(256)  not null,
