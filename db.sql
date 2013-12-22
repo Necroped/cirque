@@ -102,7 +102,7 @@ create table `message` (
 	`from` bigint(10) not null,
 	`to` bigint(10) not null,
 	`text` varchar(256)  not null,
-	`datetime` datetime default now(),
+	`datetime` datetime default current_timestamp,
 	primary key (`id`)
 ) engine=InnoDB auto_increment=1 default charset=`utf8`;
 
