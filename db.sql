@@ -40,12 +40,16 @@
 -- ====
 -- DATA
 -- ====
---		creates circuses:	`L'Odysée du Cirque`, 
---							`Cirque Pinder`, 
---							`Cirque du Soleil`		
---		creates city:		`Belfort`
---		creates country:	`France`
---		creates user:		`stowka`
+--		creates circuses:
+--			`L'Odysée du Cirque`, 
+--			`Cirque Pinder`, 
+--			`Cirque du Soleil`		
+--		creates city:
+--			`Belfort`
+--		creates country:
+--			`France`
+--		creates user:
+--			`stowka`
 --
 
 drop database cirque;
