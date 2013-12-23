@@ -32,10 +32,14 @@
 --			describes a registered user entity
 --			regular users can follow and message circuses and users
 --
+--		comment
+--			binds a user to a picture with some text
 --		followCircus
 --			binds a user to a circus
 --		followUser
 --			binds a user to another one
+--		rate
+--			binds a user to a picture with a grade
 --
 -- ====
 -- DATA
