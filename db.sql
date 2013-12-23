@@ -156,7 +156,7 @@ create table `picture` (
 	primary key (`id`),
 	constraint `fk_picture_id`
 		foreign key (`event`)
-		references picture(`id`)
+		references event(`id`)
 		on delete cascade
 		on update cascade
 ) engine=InnoDB auto_increment=500 default charset=`utf8`;
@@ -168,21 +168,51 @@ create table `comment`(
 	`user` bigint(10) unsigned not null,
 	`picture` bigint(10) unsigned not null,
 	`text` varchar(256) not null,
-	primary key (`user`, `picture`)
+	primary key (`user`, `picture`),
+	constraint `fk_comment_user_id`
+		foreign key (`user`)
+		references user(`id`)
+		on delete cascade
+		on update cascade,
+	constraint `fk_comment_picture_id`
+		foreign key (`picture`)
+		references picture(`id`)
+		on delete cascade
+		on update cascade
 ) engine=InnoDB default charset=`utf8`;
 
 create table `followCircus` (
 	`user` bigint(10) unsigned not null,
 	`circus` bigint(10) unsigned not null,
 	`datetime` datetime not null default current_timestamp,
-	primary key (`user`, `circus`)
+	primary key (`user`, `circus`),
+	constraint `fk_followCircus_user_id`
+		foreign key (`user`)
+		references user(`id`)
+		on delete cascade
+		on update cascade,
+	constraint `fk_followCircus_circus_id`
+		foreign key (`circus`)
+		references circus(`id`)
+		on delete cascade
+		on update cascade
 ) engine=InnoDB default charset=`utf8`;
 
 create table `followUser` (
-	`following` bigint(10) unsigned not null,
 	`follower` bigint(10) unsigned not null,
+	`following` bigint(10) unsigned not null,
 	`datetime` datetime not null default current_timestamp,
-	primary key (`following`, `follower`)
+	primary key (`following`, `follower`),
+	constraint `fk_followUser_follower_id`
+		foreign key (`follower`)
+		references user(`id`)
+		on delete cascade
+		on update cascade,
+	constraint `fk_followUser_following_id`
+		foreign key (`following`)
+		references user(`id`)
+		on delete cascade
+		on update cascade
 ) engine=InnoDB default charset=`utf8`;
 
 create table `rate` (
@@ -190,7 +220,17 @@ create table `rate` (
 	`picture` bigint(10) unsigned not null,
 	`date` datetime not null default current_timestamp on update current_timestamp,
 	`grade` tinyint(1) unsigned not null comment 'Between 0 and 10',
-	primary key (`user`, `picture`)
+	primary key (`user`, `picture`),
+	constraint `fk_rate_user_id`
+		foreign key (`user`)
+		references user(`id`)
+		on delete cascade
+		on update cascade,
+	constraint `fk_rate_picture_id`
+		foreign key (`picture`)
+		references picture(`id`)
+		on delete cascade
+		on update cascade
 ) engine=InnoDB default charset=`utf8`;
 
 --
