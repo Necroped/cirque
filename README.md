@@ -21,6 +21,7 @@ _Arborescence:_
 	/config => fichiers de configuration de l'application web
 	/global => ressources de l'application web (feuille de style, images, JavaScript)
 	/lib => bibliothèques externes pour l'application web
+	/database => sql de la base de données
 
 _Bundles:_
 
