@@ -21,3 +21,9 @@ _Arborescence:_
 	/config => fichiers de configuration de l'application web
 	/global => ressources de l'application web (feuille de style, images, JavaScript)
 	/lib => bibliothèques externes pour l'application web
+
+_Bundles:_
+
+	membership => cirques et utilisateurs
+	location => géolocalisation
+	activity => abonnements (follow), notes, commentaires
