@@ -65,7 +65,7 @@ use cirque;
 --
 
 create table `circus` (
-	`id` bigint(10) unsigned not null auto_increment,
+	`id` bigint(10) unsigned auto_increment,
 	`name` varchar(32) not null,
 	`country` smallint(2) unsigned not null default 0,
 	`description` varchar(1024) not null default '',
@@ -74,52 +74,50 @@ create table `circus` (
 	unique key (`name`)
 ) engine=InnoDB auto_increment=500 default charset=`utf8`;
 
-create table `city` (
-	`id` bigint(10) unsigned not null auto_increment,
-	`name` varchar(32) not null,
-	`country` bigint(10) unsigned not null,
-	`latitude` decimal(10, 8) not null comment 'Between -90 and 90 degrees',
-	`longitude` decimal(11, 8) not null comment 'Between -180 and 180 degrees',
-	primary key (`id`)
-) engine=InnoDB auto_increment=1 default charset=`utf8`;
-
 create table `country` (
-	`id` smallint(2) unsigned not null auto_increment,
+	`id` smallint(2) unsigned auto_increment,
 	`name` varchar(16) not null,
 	`latitude` decimal(10, 8) not null comment 'Between -90 and 90 degrees',
 	`longitude` decimal(11, 8) not null comment 'Between -180 and 180 degrees',
 	primary key (`id`)
 ) engine= InnoDB auto_increment=1 default charset=`utf8`;
 
+create table `city` (
+	`id` bigint(10) unsigned auto_increment,
+	`name` varchar(32) not null,
+	`country` smallint(2) unsigned not null,
+	`latitude` decimal(10, 8) not null comment 'Between -90 and 90 degrees',
+	`longitude` decimal(11, 8) not null comment 'Between -180 and 180 degrees',
+	primary key (`id`),
+	constraint `fk_country_id`
+		foreign key (`country`)
+		references country(`id`)
+		on delete cascade
+		on update cascade
+) engine=InnoDB auto_increment=1 default charset=`utf8`;
+
 create table `event` (
-	`id` bigint(10) unsigned not null auto_increment,
-	`from` date not null,
-	`to` date not null,
+	`id` bigint(10) unsigned auto_increment,
+	`fromDate` date not null,
+	`toDate` date not null,
 	`city` bigint(10) unsigned not null default 0,
 	`description` varchar(128) not null default 'No description',
 	`circus` bigint(10) unsigned not null,
-	primary key (`id`)
+	primary key (`id`),
+	constraint `fk_city_id`
+		foreign key (`city`)
+		references city(`id`)
+		on delete cascade
+		on update cascade,
+	constraint `fk_circus_id`
+		foreign key (`circus`)
+		references circus(`id`)
+		on delete cascade
+		on update cascade
 ) engine= InnoDB auto_increment=500 default charset=`utf8`;
 
-create table `message` (
-	`id` bigint(10) unsigned not null auto_increment,
-	`from` bigint(10) unsigned not null,
-	`to` bigint(10) unsigned not null,
-	`text` varchar(256) not null,
-	`datetime` datetime not null default current_timestamp,
-	primary key (`id`)
-) engine=InnoDB auto_increment=1 default charset=`utf8`;
-
-create table `picture` (
-	`id` bigint(10) unsigned not null auto_increment,
-	`date` datetime not null default current_timestamp on update current_timestamp,
-	`event` bigint(10) unsigned not null,
-	`description` varchar(64) not null default 'No description',
-	primary key (`id`)
-) engine=InnoDB auto_increment=500 default charset=`utf8`;
-
 create table `user` (
-	`id` bigint(20) unsigned not null auto_increment,
+	`id` bigint(20) unsigned auto_increment,
 	`username` varchar(64) not null,
 	`password` varchar(40) not null,
 	`firstName` varchar(16) not null,
@@ -129,6 +127,38 @@ create table `user` (
 	primary key (`id`),
 	unique key (`username`),
 	unique key (`email`)
+) engine=InnoDB auto_increment=500 default charset=`utf8`;
+
+create table `message` (
+	`id` bigint(10) unsigned auto_increment,
+	`fromUser` bigint(10) unsigned not null,
+	`toUser` bigint(10) unsigned not null,
+	`text` varchar(256) not null,
+	`datetime` datetime not null default current_timestamp,
+	primary key (`id`),
+	constraint `fk_from_user`
+		foreign key (`fromUser`)
+		references user(`id`)
+		on delete cascade
+		on update cascade,
+	constraint `fk_to_user`
+		foreign key (`toUser`)
+		references user(`id`)
+		on delete cascade
+		on update cascade
+) engine=InnoDB auto_increment=1 default charset=`utf8`;
+
+create table `picture` (
+	`id` bigint(10) unsigned auto_increment,
+	`date` datetime not null default current_timestamp on update current_timestamp,
+	`event` bigint(10) unsigned not null,
+	`description` varchar(64) not null default 'No description',
+	primary key (`id`),
+	constraint `fk_picture_id`
+		foreign key (`event`)
+		references picture(`id`)
+		on delete cascade
+		on update cascade
 ) engine=InnoDB auto_increment=500 default charset=`utf8`;
 
 --
@@ -172,14 +202,14 @@ insert into circus (name)
 values ("L'Odyssée du Cirque"), ("Cirque Pinder"), ("Cirque du Soleil");
 unlock tables;
 
-lock tables `city` write;
-insert into city (name, country, latitude, longitude)
-values ("Belfort", 1, 47.37590000, 6.52000000);
-unlock tables;
-
 lock tables `country` write;
 insert into country (id, name, latitude, longitude)
 values (1, "France", 46.00000000, 2.00000000);
+unlock tables;
+
+lock tables `city` write;
+insert into city (name, country, latitude, longitude)
+values ("Belfort", 1, 47.37590000, 6.52000000);
 unlock tables;
 
 lock tables `user` write;
