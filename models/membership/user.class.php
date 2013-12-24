@@ -24,7 +24,8 @@
 			$password = "", $firstName = "", $lastName = "",
 			$email = "", $picture = 0 ) {
 			if ( $id === 0 )
-				$this->init();
+				$this->init( $username, $password, $firstName, 
+					$lastName, $email, $picture );
 			elseif ( User::checkId( $id ) )
 				$this->fetchData( $id );
 			else
@@ -39,7 +40,7 @@
 		 *
 		 */
 		private function init( $username, $password, $firstName, 
-			$lastName, $email, $picture = 0 ) {
+			$lastName, $email, $picture ) {
 			$this->_username = $username;
 			$this->_password = $password;
 			$this->_firstName = $firstName;

@@ -53,6 +53,7 @@
 --		creates city:
 --			`Belfort`
 --		creates country:
+--			`No country`
 --			`France`
 --		creates user:
 --			`stowka`
@@ -66,16 +67,6 @@ use cirque;
 -- Entity tables
 --
 
-create table `circus` (
-	`id` bigint(10) unsigned auto_increment,
-	`name` varchar(32) not null,
-	`country` smallint(2) unsigned not null default 0,
-	`description` varchar(1024) not null default '',
-	`picture` tinyint(1) unsigned not null default 0,
-	primary key (`id`),
-	unique key (`name`)
-) engine=InnoDB auto_increment=500 default charset=`utf8`;
-
 create table `country` (
 	`id` smallint(2) unsigned auto_increment,
 	`name` varchar(16) not null,
@@ -84,6 +75,21 @@ create table `country` (
 	primary key (`id`)
 ) engine= InnoDB auto_increment=1 default charset=`utf8`;
 
+create table `circus` (
+	`id` bigint(10) unsigned auto_increment,
+	`name` varchar(32) not null,
+	`country` smallint(2) unsigned not null default 1,
+	`description` varchar(1024) not null default '',
+	`picture` tinyint(1) unsigned not null default 0,
+	primary key (`id`),
+	unique key (`name`),
+	constraint `fk_circus_country`
+		foreign key (`country`)
+		references country(`id`)
+		on delete cascade
+		on update cascade
+) engine=InnoDB auto_increment=500 default charset=`utf8`;
+
 create table `city` (
 	`id` bigint(10) unsigned auto_increment,
 	`name` varchar(32) not null,
@@ -91,7 +97,7 @@ create table `city` (
 	`latitude` decimal(10, 8) not null comment 'Between -90 and 90 degrees',
 	`longitude` decimal(11, 8) not null comment 'Between -180 and 180 degrees',
 	primary key (`id`),
-	constraint `fk_country_id`
+	constraint `fk_city_country`
 		foreign key (`country`)
 		references country(`id`)
 		on delete cascade
@@ -106,12 +112,12 @@ create table `event` (
 	`description` varchar(128) not null default 'No description',
 	`circus` bigint(10) unsigned not null,
 	primary key (`id`),
-	constraint `fk_city_id`
+	constraint `fk_event_city`
 		foreign key (`city`)
 		references city(`id`)
 		on delete cascade
 		on update cascade,
-	constraint `fk_circus_id`
+	constraint `fk_event_circus`
 		foreign key (`circus`)
 		references circus(`id`)
 		on delete cascade
@@ -119,7 +125,7 @@ create table `event` (
 ) engine= InnoDB auto_increment=500 default charset=`utf8`;
 
 create table `user` (
-	`id` bigint(20) unsigned auto_increment,
+	`id` bigint(10) unsigned auto_increment,
 	`username` varchar(64) not null,
 	`password` varchar(40) not null,
 	`firstName` varchar(16) not null,
@@ -138,12 +144,12 @@ create table `message` (
 	`text` varchar(256) not null,
 	`datetime` datetime not null default current_timestamp,
 	primary key (`id`),
-	constraint `fk_from_user`
+	constraint `fk_message_fromUser`
 		foreign key (`fromUser`)
 		references user(`id`)
 		on delete cascade
 		on update cascade,
-	constraint `fk_to_user`
+	constraint `fk_message_toUser`
 		foreign key (`toUser`)
 		references user(`id`)
 		on delete cascade
@@ -155,16 +161,16 @@ create table `picture` (
 	`date` datetime not null default current_timestamp on update current_timestamp,
 	`event` bigint(10) unsigned not null,
 	`description` varchar(64) not null default 'No description',
-	`user` bigint(10) not null default 0 comment 'User who uploaded the picture',
+	`user` bigint(10) unsigned not null comment 'User who uploaded the picture',
 	`valid` tinyint(1) default 1,
 	primary key (`id`),
-	constraint `fk_picture_id`
+	constraint `fk_picture_event`
 		foreign key (`event`)
 		references event(`id`)
 		on delete cascade
 		on update cascade,
 	constraint `fk_picture_user`
-		foreign key `user`
+		foreign key (`user`)
 		references user(`id`)
 		on delete cascade
 		on update cascade
@@ -173,17 +179,18 @@ create table `picture` (
 --
 -- Association tables
 --
+
 create table `comment`(
 	`user` bigint(10) unsigned not null,
 	`picture` bigint(10) unsigned not null,
 	`text` varchar(256) not null,
 	primary key (`user`, `picture`),
-	constraint `fk_comment_user_id`
+	constraint `fk_comment_user`
 		foreign key (`user`)
 		references user(`id`)
 		on delete cascade
 		on update cascade,
-	constraint `fk_comment_picture_id`
+	constraint `fk_comment_picture`
 		foreign key (`picture`)
 		references picture(`id`)
 		on delete cascade
@@ -195,12 +202,12 @@ create table `followCircus` (
 	`circus` bigint(10) unsigned not null,
 	`datetime` datetime not null default current_timestamp,
 	primary key (`user`, `circus`),
-	constraint `fk_followCircus_user_id`
+	constraint `fk_followCircus_user`
 		foreign key (`user`)
 		references user(`id`)
 		on delete cascade
 		on update cascade,
-	constraint `fk_followCircus_circus_id`
+	constraint `fk_followCircus_circus`
 		foreign key (`circus`)
 		references circus(`id`)
 		on delete cascade
@@ -212,12 +219,12 @@ create table `followUser` (
 	`following` bigint(10) unsigned not null,
 	`datetime` datetime not null default current_timestamp,
 	primary key (`following`, `follower`),
-	constraint `fk_followUser_follower_id`
+	constraint `fk_followUser_follower`
 		foreign key (`follower`)
 		references user(`id`)
 		on delete cascade
 		on update cascade,
-	constraint `fk_followUser_following_id`
+	constraint `fk_followUser_following`
 		foreign key (`following`)
 		references user(`id`)
 		on delete cascade
@@ -227,15 +234,15 @@ create table `followUser` (
 create table `manage` (
 	`user` bigint(10) unsigned not null,
 	`circus` bigint(10) unsigned not null,
-	`datetime` datetime not null, default current_timestamp,
+	`datetime` datetime not null default current_timestamp,
 	primary key (`user`, `circus`),
 	constraint `fk_manage_user`
-		foreign key `user`
+		foreign key (`user`)
 		references user(`id`)
 		on delete cascade
 		on update cascade,
 	constraint `fk_manage_circus`
-		foreign key `circus`
+		foreign key (`circus`)
 		references circus(`id`)
 		on delete cascade
 		on update cascade
@@ -247,12 +254,12 @@ create table `rate` (
 	`date` datetime not null default current_timestamp on update current_timestamp,
 	`grade` tinyint(1) unsigned not null comment 'Between 0 and 10',
 	primary key (`user`, `picture`),
-	constraint `fk_rate_user_id`
+	constraint `fk_rate_user`
 		foreign key (`user`)
 		references user(`id`)
 		on delete cascade
 		on update cascade,
-	constraint `fk_rate_picture_id`
+	constraint `fk_rate_picture`
 		foreign key (`picture`)
 		references picture(`id`)
 		on delete cascade
@@ -263,14 +270,16 @@ create table `rate` (
 -- Data
 --
 
+lock tables `country` write;
+insert into country (name, latitude, longitude)
+values ("No country", 0.00000000, 0.00000000);
+insert into country (name, latitude, longitude)
+values ("France", 46.00000000, 2.00000000);
+unlock tables;
+
 lock tables `circus` write;
 insert into circus (name) 
 values ("L'Odyssée du Cirque"), ("Cirque Pinder"), ("Cirque du Soleil");
-unlock tables;
-
-lock tables `country` write;
-insert into country (id, name, latitude, longitude)
-values (1, "France", 46.00000000, 2.00000000);
 unlock tables;
 
 lock tables `city` write;
