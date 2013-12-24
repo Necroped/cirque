@@ -38,6 +38,8 @@
 --			binds a user to a circus
 --		followUser
 --			binds a user to another one
+--		manage
+--			binds a user to a circus on a management relationship
 --		rate
 --			binds a user to a picture with a grade
 --
@@ -153,10 +155,17 @@ create table `picture` (
 	`date` datetime not null default current_timestamp on update current_timestamp,
 	`event` bigint(10) unsigned not null,
 	`description` varchar(64) not null default 'No description',
+	`user` bigint(10) not null default 0 comment 'User who uploaded the picture',
+	`valid` tinyint(1) default 1,
 	primary key (`id`),
 	constraint `fk_picture_id`
 		foreign key (`event`)
 		references event(`id`)
+		on delete cascade
+		on update cascade,
+	constraint `fk_picture_user`
+		foreign key `user`
+		references user(`id`)
 		on delete cascade
 		on update cascade
 ) engine=InnoDB auto_increment=500 default charset=`utf8`;
@@ -211,6 +220,23 @@ create table `followUser` (
 	constraint `fk_followUser_following_id`
 		foreign key (`following`)
 		references user(`id`)
+		on delete cascade
+		on update cascade
+) engine=InnoDB default charset=`utf8`;
+
+create table `manage` (
+	`user` bigint(10) unsigned not null,
+	`circus` bigint(10) unsigned not null,
+	`datetime` datetime not null, default current_timestamp,
+	primary key (`user`, `circus`),
+	constraint `fk_manage_user`
+		foreign key `user`
+		references user(`id`)
+		on delete cascade
+		on update cascade,
+	constraint `fk_manage_circus`
+		foreign key `circus`
+		references circus(`id`)
 		on delete cascade
 		on update cascade
 ) engine=InnoDB default charset=`utf8`;
