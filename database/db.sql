@@ -78,6 +78,7 @@ create table `circus` (
 	`country` smallint(2) unsigned not null default 1,
 	`description` varchar(1024) not null default '',
 	`picture` tinyint(1) unsigned not null default 0,
+	`genuine` tinyint(1) unsigned not null default 0,
 	primary key (`id`),
 	unique key (`name`),
 	constraint `fk_circus_country`
@@ -85,7 +86,7 @@ create table `circus` (
 		references country(`id`)
 		on delete cascade
 		on update cascade
-) engine=InnoDB auto_increment=500 default charset=`utf8`;
+) engine=InnoDB auto_increment=1 default charset=`utf8`;
 
 create table `city` (
 	`id` bigint(10) unsigned auto_increment,
@@ -105,7 +106,7 @@ create table `event` (
 	`id` bigint(10) unsigned auto_increment,
 	`fromDate` date not null,
 	`toDate` date not null,
-	`city` bigint(10) unsigned not null default 0,
+	`city` bigint(10) unsigned not null,
 	`description` varchar(128) not null default 'No description',
 	`circus` bigint(10) unsigned not null,
 	primary key (`id`),
@@ -119,7 +120,7 @@ create table `event` (
 		references circus(`id`)
 		on delete cascade
 		on update cascade
-) engine= InnoDB auto_increment=500 default charset=`utf8`;
+) engine= InnoDB auto_increment=1 default charset=`utf8`;
 
 create table `user` (
 	`id` bigint(10) unsigned auto_increment,
@@ -132,7 +133,7 @@ create table `user` (
 	primary key (`id`),
 	unique key (`username`),
 	unique key (`email`)
-) engine=InnoDB auto_increment=500 default charset=`utf8`;
+) engine=InnoDB auto_increment=1 default charset=`utf8`;
 
 create table `message` (
 	`id` bigint(10) unsigned auto_increment,
@@ -171,7 +172,7 @@ create table `picture` (
 		references user(`id`)
 		on delete cascade
 		on update cascade
-) engine=InnoDB auto_increment=500 default charset=`utf8`;
+) engine=InnoDB auto_increment=1 default charset=`utf8`;
 
 --
 -- Association tables
