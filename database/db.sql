@@ -53,7 +53,7 @@
 --			`stowka`
 --
 
-drop database cirque;
+drop database if exists cirque;
 create database cirque;
 use cirque;
 
