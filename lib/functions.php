@@ -26,3 +26,16 @@
 		$uri = implode( "/", $uri );
 		return $uri;
 	}
+
+	/**
+	 * conv
+	 *
+	 * @author Antoine De Gieter
+	 * @param &$value: string
+	 * 		value that is going to be converted into utf8
+	 *
+	 */
+	function conv( &$value, $key ) {
+		if ( is_string( $value ) )
+			$value = iconv( 'windows-1252', 'utf-8', $value );
+	} 

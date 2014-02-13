@@ -3,7 +3,11 @@
 	require_once "../../lib/spdo.class.php";
 	require_once "../../lib/functions.php";
 
-	if ( isset( $_GET['name'] ) && !empty( $_GET['name'] ) ):
+	define( "API_KEY", sha1( "odyssee" ) );
+
+	if ( isset( $_GET['name'] ) && !empty( $_GET['name'] ) 
+	&& isset( $_GET['key'] )
+	&& $_GET['key'] === sha1( "odysee" ) ):
 		$dbh = SPDO::getInstance();
 		$stmt = $dbh->prepare( "SELECT id, name, country, 
 			description, picture FROM circus WHERE name like :name;");
@@ -22,11 +26,7 @@
 				endif;
 			endforeach;
 			$response["circuses"] = $circuses;
-			array_walk_recursive( $response, function( &$value, $key ) {
-				if ( is_string( $value ) ) {
-					$value = iconv( 'windows-1252', 'utf-8', $value );
-				}
-			});
+			array_walk_recursive( $response, 'conv' );
 		else:
 			$response = array( "error" => true, "stack_trace" => "no match" );
 		endif;

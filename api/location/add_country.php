@@ -5,10 +5,10 @@
 
 	define( "API_KEY", sha1( "odyssee" ) );
 
-	if ( //isset( $_GET['key'] )
-	//&& $_GET['key'] === sha1( "odysee" )
-	isset( $_GET['country'] ) 
-	&& !empty( $_GET['country'] ) ):
+	if ( isset( $_GET['country'] ) 
+	&& !empty( $_GET['country'] )
+	&& isset( $_GET['key'] )
+	&& $_GET['key'] === sha1( "odysee" ) ):
 		$dbh = SPDO::getInstance();
 		$country = $_GET['country'];
 		$json = file_get_contents( "http://maps.googleapis.com/maps/api/geocode/json?address=$country&sensor=true" );
@@ -44,7 +44,7 @@
 	else:
 		$result = array(
 				"error" => true,
-				"stack_trace" => "bad key / wonrg params"
+				"stack_trace" => "bad key / wrong params"
 			);
 	endif;
 	print json_encode( $result );

@@ -6,6 +6,9 @@
 	 */
 
 	session_start();
+
+	require_once "lib/spdo.class.php";
+
 	$allowedPages = array(
 		"home",
 		"validatePictures",

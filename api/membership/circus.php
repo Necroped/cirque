@@ -3,7 +3,11 @@
 	require_once "../../lib/spdo.class.php";
 	require_once "../../lib/functions.php";
 
-	if ( isset( $_GET['id'] ) && is_numeric( $_GET['id'] ) ):
+	define( "API_KEY", sha1( "odyssee" ) );
+
+	if ( isset( $_GET['id'] ) && is_numeric( $_GET['id'] )
+	&& isset( $_GET['key'] )
+	&& $_GET['key'] === sha1( "odysee" ) ):
 		$dbh = SPDO::getInstance();
 		$stmt = $dbh->prepare( "SELECT * FROM circus WHERE id = :id;" );
 		$stmt->bindParam( "id", $_GET['id'], PDO::PARAM_INT );
@@ -18,11 +22,7 @@
 					relPathToUri( "../../global/img/upload/circuses/" . $circus["id"] . ".jpg" );
 			endif;
 			$response = array_merge( $response, $circus );
-			array_walk_recursive( $response, function( &$value, $key ) {
-				if ( is_string( $value ) ) {
-					$value = iconv( 'windows-1252', 'utf-8', $value );
-				}
-			});
+			array_walk_recursive( $response, 'conv' );
 		else:
 			$response = array( "error" => true, "stack_trace" => "no match" );
 		endif;

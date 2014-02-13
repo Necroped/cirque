@@ -3,8 +3,8 @@
 -- @author 
 --		Antoine De Gieter
 -- @digest 
---		This script will drop any database known as `cirque`.
---		Afterwards it will create a new database `cirque` and add tables
+--		This script will drop any database known as `odycircu`.
+--		Afterwards it will create a new database `odycircu` and add tables
 --		according to the following structure.
 --		Eventually, it will insert a few required basis rows.
 -- @structure
@@ -53,9 +53,9 @@
 --			`stowka`
 --
 
-drop database if exists cirque;
-create database cirque;
-use cirque;
+drop database if exists odycircu;
+create database odycircu character set utf8 collate utf8_general_ci;
+use odycircu;
 
 --
 -- Entity tables
@@ -140,7 +140,7 @@ create table `message` (
 	`fromUser` bigint(10) unsigned not null,
 	`toUser` bigint(10) unsigned not null,
 	`text` varchar(256) not null,
-	`datetime` datetime not null default current_timestamp,
+	`datetime` timestamp not null default current_timestamp,
 	primary key (`id`),
 	constraint `fk_message_fromUser`
 		foreign key (`fromUser`)
@@ -156,7 +156,7 @@ create table `message` (
 
 create table `picture` (
 	`id` bigint(10) unsigned auto_increment,
-	`date` datetime not null default current_timestamp on update current_timestamp,
+	`date` timestamp not null default current_timestamp on update current_timestamp,
 	`event` bigint(10) unsigned not null,
 	`description` varchar(64) not null default 'No description',
 	`user` bigint(10) unsigned not null comment 'User who uploaded the picture',
@@ -198,7 +198,7 @@ create table `comment`(
 create table `followCircus` (
 	`user` bigint(10) unsigned not null,
 	`circus` bigint(10) unsigned not null,
-	`datetime` datetime not null default current_timestamp,
+	`datetime` timestamp not null default current_timestamp,
 	primary key (`user`, `circus`),
 	constraint `fk_followCircus_user`
 		foreign key (`user`)
@@ -215,7 +215,7 @@ create table `followCircus` (
 create table `followUser` (
 	`follower` bigint(10) unsigned not null,
 	`following` bigint(10) unsigned not null,
-	`datetime` datetime not null default current_timestamp,
+	`datetime` timestamp not null default current_timestamp,
 	primary key (`following`, `follower`),
 	constraint `fk_followUser_follower`
 		foreign key (`follower`)
@@ -232,7 +232,7 @@ create table `followUser` (
 create table `manage` (
 	`user` bigint(10) unsigned not null,
 	`circus` bigint(10) unsigned not null,
-	`datetime` datetime not null default current_timestamp,
+	`datetime` timestamp not null default current_timestamp,
 	primary key (`user`, `circus`),
 	constraint `fk_manage_user`
 		foreign key (`user`)
@@ -249,7 +249,7 @@ create table `manage` (
 create table `rate` (
 	`user` bigint(10) unsigned not null,
 	`picture` bigint(10) unsigned not null,
-	`date` datetime not null default current_timestamp on update current_timestamp,
+	`date` timestamp not null default current_timestamp on update current_timestamp,
 	`grade` tinyint(1) unsigned not null comment 'Between 0 and 10',
 	primary key (`user`, `picture`),
 	constraint `fk_rate_user`
@@ -454,5 +454,13 @@ unlock tables;
 lock tables `user` write;
 insert into user (username, password, firstName, lastName, email)
 values ("stowka", sha1("893QQY"), "Antoine", "De Gieter",
-"antoine@netproduction.fr");
+"antoine@netproduction.fr"),
+("eska", sha1("c1rque"), "Alexis", "Beaujon",
+"alexis.beaujon@edu.univ-fcomte.fr"),
+("gozmonkey", sha1("c1rque"), "Antoine", "Mady",
+"antoine.mady@edu.univ-fcomte.fr"),
+("noxyy", sha1("c1rque"), "Jérôme", "Boesch",
+"jerome.boesch@edu.univ-fcomte.fr"),
+("duyanh", sha1("c1rque"), "Tran Duy Anh", "Phan",
+"tran_duy_anh.phan@edu.univ-fcomte.fr");
 unlock tables;
