@@ -5,33 +5,30 @@
 
 	define( "API_KEY", sha1( "odyssee" ) );
 
-	if ( isset( $_GET['circus'] ) 
-	&& !empty( $_GET['circus'] )
+	if ( isset( $_GET['name'] ) 
+	&& !empty( $_GET['name'] )
 	&& isset( $_GET['country'] ) 
 	&& !empty( $_GET['country'] )
+	&& isset( $_GET['description'] ) 
+	&& !empty( $_GET['description'] )
 	&& isset( $_GET['key'] )
 	&& $_GET['key'] === sha1( "odysee" ) ):
 		$dbh = SPDO::getInstance();
-		$circus = $_GET['circus'];
-		$countryId = $_GET['country'];
-		$stmt = $dbh->prepare( "select name from country where id = :id;" );
-		$stmt->bindParam( ":id", $countryId, PDO::PARAM_INT );
-		$stmt->execute();
-		$country = $stmt->fetch( PDO::FETCH_ASSOC );
-		$stmt->closeCursor();
-		$country = $country['name'];
+		$name = $_GET['name'];
+		$country = $_GET['country'];
+		$description = $_GET['description'];
 
 		$stmt = $dbh->prepare( "INSERT INTO circus (name, country, description)
 			VALUES (:name, :country, :description);" );
 		$stmt->bindParam( ":name", $name, PDO::PARAM_STR );
-		$stmt->bindParam( ":country", $countryId, PDO::PARAM_INT );
-		$stmt->bindParam( ":description", $des, PDO::PARAM_STR );
+		$stmt->bindParam( ":country", $country, PDO::PARAM_INT );
+		$stmt->bindParam( ":description", $description, PDO::PARAM_STR );
 		if ( $stmt->execute() ):
 			$result = array(
 				"error" => false,
-				"circus" => $name,
-				"country" => $countryId,
-				"des" => $des
+				"name" => $name,
+				"country" => $country,
+				"description" => $description
 			);
 		else:
 			$result = array(
