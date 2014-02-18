@@ -7,7 +7,7 @@
 	&& isset( $_GET['key'] )
 	&& $_GET['key'] === sha1( "odyssee" ) ):
 		$dbh = SPDO::getInstance();
-		$stmt = $dbh->prepare( "SELECT * FROM event WHERE circus = :circus;" );
+		$stmt = $dbh->prepare( "SELECT * FROM event WHERE circus = :circus ORDER BY fromDate DESC;" );
 		$stmt->bindParam( ":circus", $_GET['circus'], PDO::PARAM_INT );
 		$stmt->execute();
 		$response = array( "error" => false );
