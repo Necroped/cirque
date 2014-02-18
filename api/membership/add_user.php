@@ -23,9 +23,7 @@
 		if ( $stmt->execute() ):
 			$result = array(
 				"error" => false,
-				"username" => $username,
-				"password" => $password,
-				"email" => $email
+				"id" => $dbh->lastInsertId(),
 			);
 		else:
 			$result = array(
