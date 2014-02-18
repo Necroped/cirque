@@ -3,20 +3,21 @@
 	require_once "../../lib/spdo.class.php";
 	require_once "../../lib/functions.php";
 
-	define( "API_KEY", sha1( "odyssee" ) );
-
 	if ( isset( $_GET['name'] ) 
 	&& !empty( $_GET['name'] )
 	&& isset( $_GET['country'] ) 
 	&& !empty( $_GET['country'] )
 	&& isset( $_GET['description'] ) 
 	&& !empty( $_GET['description'] )
+	&& isset( $_GET['user'] )
+	&& !empty( $_GET['user'] )
 	&& isset( $_GET['key'] )
-	&& $_GET['key'] === sha1( "odysee" ) ):
+	&& $_GET['key'] === sha1( "odyssee" ) ):
 		$dbh = SPDO::getInstance();
 		$name = $_GET['name'];
 		$country = $_GET['country'];
 		$description = $_GET['description'];
+		$user = $_GET['user'];
 
 		$stmt = $dbh->prepare( "INSERT INTO circus (name, country, description)
 			VALUES (:name, :country, :description);" );
@@ -30,13 +31,20 @@
 				"country" => $country,
 				"description" => $description
 			);
+			$stmt->closeCursor();
+			$circus = $dbh->lastInsertId();
+			$stmt = $dbh->prepare( "insert into manage (user, circus) values (:user, :circus);" );
+			$stmt->bindParam( ":user", $user, PDO::PARAM_INT );
+			$stmt->bindParam( ":circus", $circus, PDO::PARAM_INT );
+			$stmt->execute();
+			$stmt->closeCursor();
 		else:
 			$result = array(
 				"error" => true,
 				"stack_trace" => "wrong params"
 			);
+			$stmt->closeCursor();
 		endif;
-		$stmt->closeCursor();
 	else:
 		$result = array(
 				"error" => true,

@@ -3,7 +3,7 @@
 	require_once "../../lib/spdo.class.php";
 	require_once "../../lib/functions.php";
 
-	if ( isset( $_GET['key'] ) && $_GET['key'] === sha1( "odysee" ) ):
+	if ( isset( $_GET['key'] ) && $_GET['key'] === sha1( "odyssee" ) ):
 		$dbh = SPDO::getInstance();
 		$stmt = $dbh->prepare( "select * from circus where genuine = 1;" );
 		$stmt->execute();

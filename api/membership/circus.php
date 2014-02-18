@@ -3,11 +3,9 @@
 	require_once "../../lib/spdo.class.php";
 	require_once "../../lib/functions.php";
 
-	define( "API_KEY", sha1( "odyssee" ) );
-
 	if ( isset( $_GET['id'] ) && is_numeric( $_GET['id'] )
 	&& isset( $_GET['key'] )
-	&& $_GET['key'] === sha1( "odysee" ) ):
+	&& $_GET['key'] === sha1( "odyssee" ) ):
 		$dbh = SPDO::getInstance();
 		$stmt = $dbh->prepare( "SELECT * FROM circus WHERE id = :id;" );
 		$stmt->bindParam( "id", $_GET['id'], PDO::PARAM_INT );

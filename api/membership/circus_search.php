@@ -3,11 +3,9 @@
 	require_once "../../lib/spdo.class.php";
 	require_once "../../lib/functions.php";
 
-	define( "API_KEY", sha1( "odyssee" ) );
-
 	if ( isset( $_GET['name'] ) && !empty( $_GET['name'] ) 
 	&& isset( $_GET['key'] )
-	&& $_GET['key'] === sha1( "odysee" ) ):
+	&& $_GET['key'] === sha1( "odyssee" ) ):
 		$dbh = SPDO::getInstance();
 		$stmt = $dbh->prepare( "SELECT id, name, country, 
 			description, picture FROM circus WHERE name like :name;");

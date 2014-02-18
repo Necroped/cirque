@@ -2,7 +2,9 @@
 	header( "Content-Type: application/json" );
 	require_once "../../lib/spdo.class.php";
 
-	if ( isset( $_GET['username'] ) && isset( $_GET['password'] ) ):
+	if ( isset( $_GET['username'] ) && isset( $_GET['password'] )
+	&& isset( $_GET['key'] )
+	&& $_GET['key'] === sha1( "odyssee" ) ):
 		$dbh = SPDO::getInstance();
 		$stmt = $dbh->prepare( "SELECT count(*) FROM user 
 			WHERE username = :username AND password = sha1(:password);" );
