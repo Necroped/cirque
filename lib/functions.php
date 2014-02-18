@@ -39,3 +39,19 @@
 		if ( is_string( $value ) )
 			$value = iconv( 'windows-1252', 'utf-8', $value );
 	} 
+
+	/**
+	 * validateDate
+	 * 
+	 * @author Antoine De Gieter
+	 * @param $date
+	 *
+	 * @param [[$format]]
+	 *
+	 * @return
+	 *
+	 */
+	function validateDate( $date, $format = 'Y-m-d H:i:s' ) {
+		$d = DateTime::createFromFormat($format, $date);
+		return $d && $d->format( $format ) === $date;
+	}
