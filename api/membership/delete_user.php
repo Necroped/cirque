@@ -13,8 +13,9 @@
 		$stmt->execute();
 		$stmt->closeCursor();
 
-		if ( file_exists( "../../global/img/upload/users/" . $_GET['id'] . ".jpg" ) )
-			unset( "../../global/img/upload/users/" . $_GET['id'] . ".jpg" );
+		if ( file_exists( "../../global/img/upload/users/" . $_GET['id'] . ".jpg" ) ):
+			//unset( "../../global/img/upload/users/" . $_GET['id'] . ".jpg" );
+		endif;
 
 		$response = array( "error" => false );
 		

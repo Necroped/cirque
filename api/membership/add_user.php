@@ -28,6 +28,7 @@
 		else:
 			$result = array(
 				"error" => true,
+				"id" => 0,
 				"stack_trace" => "wrong params"
 			);
 		endif;
@@ -35,6 +36,7 @@
 	else:
 		$result = array(
 				"error" => true,
+				"id" => 0,
 				"stack_trace" => "bad key / wrong params"
 			);
 	endif;
