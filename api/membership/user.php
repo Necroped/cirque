@@ -15,7 +15,7 @@
 			$response = array_merge( $response, $user );
 			array_walk_recursive( $response, 'conv' );
 			$response["picture"] = $response['picture'] ? "http://" . $_SERVER['HTTP_HOST'] .
-				relPathToUri( "../../global/img/upload/users/" . $response["id"] . ".jpg" ) : "http://" . $_SERVER['HTTP_HOST'] . relPathToUri( "../../global/img/upload/users/default.jpg" );
+				relPathToUri( "../../global/img/upload/users/" . $response["id"] . ".jpg" ) : "http://" . $_SERVER['HTTP_HOST'] . relPathToUri( "../../global/img/upload/users/default.png" );
 		else:
 			$response = array( "error" => true, "stack_trace" => "no match" );
 		endif;
