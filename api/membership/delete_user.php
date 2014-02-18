@@ -12,6 +12,10 @@
 		$stmt->bindParam( ":id", $_GET['id'], PDO::PARAM_INT );
 		$stmt->execute();
 		$stmt->closeCursor();
+
+		if ( file_exists( "../../global/img/upload/users/" . $_GET['id'] . ".jpg" ) )
+			unset( "../../global/img/upload/users/" . $_GET['id'] . ".jpg" );
+
 		$response = array( "error" => false );
 		
 	else:
