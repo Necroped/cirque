@@ -1,5 +1,5 @@
 <?php
-	header( "Content-Type: text/plain" );
+	header( "Content-Type: application/json" );
 	require_once "../../lib/spdo.class.php";
 	require_once "../../lib/functions.php";
 
