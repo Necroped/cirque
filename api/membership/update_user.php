@@ -23,7 +23,7 @@
 		$email = $_GET['email'];
 		$password = $_GET['password1'];
 
-		$stmt = $dbh->prepare( "UPDATE user SET firstName = :firstName, lastName = :lastName, email = :email, password = sha1(:password); WHERE id = :id" );
+		$stmt = $dbh->prepare( "UPDATE user SET firstName = :firstName, lastName = :lastName, email = :email, password = sha1(:password) WHERE id = :id;" );
 		$stmt->bindParam( ":firstName", $firstName, PDO::PARAM_STR );
 		$stmt->bindParam( ":lastName", $lastName, PDO::PARAM_STR );
 		$stmt->bindParam( ":email", $email, PDO::PARAM_STR );
