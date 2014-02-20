@@ -25,14 +25,12 @@
 		$stmt->bindParam( ":country", $country, PDO::PARAM_INT );
 		$stmt->bindParam( ":description", $description, PDO::PARAM_STR );
 		if ( $stmt->execute() ):
+			$circus = $dbh->lastInsertId();
 			$result = array(
 				"error" => false,
-				"name" => $name,
-				"country" => $country,
-				"description" => $description
+				"id" => $circus
 			);
 			$stmt->closeCursor();
-			$circus = $dbh->lastInsertId();
 			$stmt = $dbh->prepare( "insert into manage (user, circus) values (:user, :circus);" );
 			$stmt->bindParam( ":user", $user, PDO::PARAM_INT );
 			$stmt->bindParam( ":circus", $circus, PDO::PARAM_INT );

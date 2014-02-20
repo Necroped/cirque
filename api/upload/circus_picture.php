@@ -20,7 +20,7 @@
 			$stmt->closeCursor();
 
 			if ( !$picture ):
-				$stmt->prepare( "UPDATE circus SET picture = 1; WHERE id = :id" );
+				$stmt = $dbh->prepare( "UPDATE circus SET picture = 1; WHERE id = :id" );
 				$stmt->bindParam( ":id", $id, PDO::PARAM_INT );
 				$stmt->execute();
 				$stmt->closeCursor();
