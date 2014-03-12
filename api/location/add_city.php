@@ -10,7 +10,7 @@
 	&& isset( $_GET['country'] ) 
 	&& !empty( $_GET['country'] )
 	&& isset( $_GET['key'] )
-	&& $_GET['key'] === sha1( "odysee" ) ):
+	&& $_GET['key'] === sha1( "odyssee" ) ):
 		$dbh = SPDO::getInstance();
 		$city = $_GET['city'];
 		$countryId = $_GET['country'];

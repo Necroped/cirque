@@ -8,7 +8,7 @@
 	if ( isset( $_GET['country'] ) 
 	&& !empty( $_GET['country'] )
 	&& isset( $_GET['key'] )
-	&& $_GET['key'] === sha1( "odysee" ) ):
+	&& $_GET['key'] === sha1( "odyssee" ) ):
 		$dbh = SPDO::getInstance();
 		$country = $_GET['country'];
 		$json = file_get_contents( "http://maps.googleapis.com/maps/api/geocode/json?address=$country&sensor=true" );
