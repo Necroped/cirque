@@ -31,7 +31,7 @@
 			return self::$_instance;
 		}
 
-		public function query( $query ) {
+		public function query( $query) {
 			return $this->_PDOInstance->query( $query );
 		}
 
