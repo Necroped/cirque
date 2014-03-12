@@ -12,7 +12,6 @@
 	&& isset( $_GET['city'] ) 
 	&& !empty( $_GET['city'] )
 	&& isset( $_GET['description'] )
-	&& !empty( $_GET['description'] )
 	&& isset( $_GET['circus'] )
 	&& !empty( $_GET['circus'] )
 	&& isset( $_GET['key'] )
