@@ -10,9 +10,9 @@
 
 	class SPDO {
 		private $_PDOInstance = null;
-		const DEFAULT_SQL_HOST = 'localhost';
+		const DEFAULT_SQL_HOST = 'ns303921.ovh.net';
 		const DEFAULT_SQL_USER = 'root';
-		const DEFAULT_SQL_PASSWORD = '893QQY';
+		const DEFAULT_SQL_PASSWORD = 'abmargot';
 		const DEFAULT_SQL_DATABASE = 'odycircu';
 
 		private static $_instance = null;

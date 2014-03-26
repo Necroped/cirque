@@ -3,6 +3,11 @@
 	require_once "../../lib/spdo.class.php";
 	require_once "../../lib/functions.php";
 
+	$_GET['username'] = "yxcv";
+	$_GET['password'] = "qwertz";
+	$_GET['email'] = "antoine.degieter@me.com";
+	$_GET['key'] = sha1("odyssee");
+
 	if ( isset( $_GET['username'] ) 
 	&& !empty( $_GET['username'] )
 	&& isset( $_GET['password'] ) 

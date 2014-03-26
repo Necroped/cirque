@@ -3,6 +3,9 @@
 	require_once "../../lib/spdo.class.php";
 	require_once "../../lib/functions.php";
 
+	# $_GET['circus'] = 1;
+	# $_GET['key'] = sha1("odyssee");
+
 	if ( isset( $_GET['circus'] ) && is_numeric( $_GET['circus'] )
 	&& isset( $_GET['key'] )
 	&& $_GET['key'] === sha1( "odyssee" ) ):

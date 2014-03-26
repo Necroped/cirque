@@ -9,6 +9,8 @@
 
 	require_once "lib/spdo.class.php";
 
+	define("TITLE", "Odycircus - ");
+
 	$allowedPages = array(
 		"home",
 		"validatePictures",

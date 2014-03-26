@@ -1,8 +1,19 @@
+<?php 
+	require_once "config/config.inc";
+	/*
+	ADMIN
+	Cirque irreversible
+	Photo user+cirque
+	Page profil user/perso
+	Modal description
+	*/
+?>
 <!doctype html>
 <html>
+
 	<head>
 		<meta charset="utf-8">
-		<title>Home</title>
+		<title><?php print TITLE; ?>Accueil</title>
 
 		<link rel="stylesheet" type="text/css" href="global/css/bootstrap.min.css">
 		<link rel="stylesheet" type="text/css" href="global/css/admin-theme.css">
@@ -13,40 +24,53 @@
 		<div class="container">
 			<div class="row">
 				<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
-					
+
 				</div>
 				<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
 					<div class="padded"></div>
 					<ul class="nav nav-pills nav-stacked">
 						<li class="text-center active">
-							<a href="#">
+							<a href="">
+							<span class="glyphicon glyphicon-home"></span>
 								Home
 							</a>
 						</li>
 
 						<li class="text-center">
-							<a href="#">
-								Valider des photos
+							<a href="?page=validatePictures">
+							<span class="glyphicon glyphicon-check"></span>
+								Valider les photos
 							</a>
 						</li>
 
 						<li class="text-center">
-							<a href="#">
-								Toutes les photos
-							</a>
-						</li>
-
-						<li class="text-center">
-							<a href="#">
+							<a href="?page=circuses">
+							<span class="glyphicon glyphicon-flag"></span>
 								Tous les cirques
 							</a>
 						</li>
 
 						<li class="text-center">
-							<a href="#">
+							<a href="?page=users">
+							<span class="glyphicon glyphicon-user"></span>
 								Tous les utilisateurs
 							</a>
 						</li>
+
+						<li class="text-center">
+							<a href="?page=events">
+							<span class="glyphicon glyphicon-calendar"></span>
+								Tous les evenements
+							</a>
+						</li>
+
+						<li class="text-center">
+							<a href="map.html">
+							<span class="glyphicon glyphicon-globe"></span>
+								Carte
+							</a>
+						</li>
+
 					</ul>
 				</div>
 				<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">

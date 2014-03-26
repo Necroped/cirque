@@ -14,13 +14,12 @@
 			$response = array( "error" => false );
 			if ( (int)$circus["picture"] === 0 ):
 				$circus["picture"] = "http://" . $_SERVER['HTTP_HOST'] .
-					relPathToUri( "../../global/img/upload/circuses/no.jpg" );
+					relPathToUri( "../../global/img/upload/circuses/default.jpg" );
 			else:
 				$circus["picture"] = "http://" . $_SERVER['HTTP_HOST'] .
 					relPathToUri( "../../global/img/upload/circuses/" . $circus["id"] . ".jpg" );
 			endif;
 			$response = array_merge( $response, $circus );
-			array_walk_recursive( $response, 'conv' );
 		else:
 			$response = array( "error" => true, "stack_trace" => "no match" );
 		endif;

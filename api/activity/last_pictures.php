@@ -3,14 +3,14 @@
 	require_once "../../lib/spdo.class.php";
 	require_once "../../lib/functions.php";
 
-	if ( isset( $_GET['circus'] ) && is_numeric( $_GET['circus'] )
+	if ( isset( $_GET['event'] ) && is_numeric( $_GET['event'] )
 	&& isset( $_GET['key'] )
 	&& $_GET['key'] === sha1( "odyssee" ) ):
 		$from = isset( $_GET['from'] ) ? $_GET['from'] : 0;
 		$limit = isset( $_GET['limit'] ) ? $_GET['limit'] : 20;
 		$dbh = SPDO::getInstance();
-		$stmt = $dbh->prepare( "SELECT * FROM picture ORDER BY date DESC LIMIT :from, :limit;" );
-		$stmt->bindParam( ":circus", $_GET['circus'], PDO::PARAM_INT );
+		$stmt = $dbh->prepare( "SELECT * FROM picture WHERE event = :event ORDER BY date DESC LIMIT :from, :limit;" );
+		$stmt->bindParam( ":event", $_GET['event'], PDO::PARAM_INT );
 		$stmt->bindParam( ":from", $_GET['from'], PDO::PARAM_INT );
 		$stmt->bindParam( ":limit", $_GET['limit'], PDO::PARAM_INT );
 		$stmt->execute();
